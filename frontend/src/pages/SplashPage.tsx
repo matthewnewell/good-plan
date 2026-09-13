@@ -32,9 +32,10 @@ export default function SplashPage() {
       <div className="splash-page__scroll">
         <div className="splash-page__content">
           <header className="splash-hero">
-            <h1 className="splash-hero__title">Good Plan</h1>
+            <h1 className="splash-hero__title">Let's make a plan.</h1>
             <p className="splash-hero__sub">
-              Define the labor a project needs, before anyone commits a person to it.
+              Good Plan helps you plan labor, materials, subcontracts, and travel against your
+              project budget.
             </p>
             <div className="splash-hero__actions">
               <Link className="gp-btn gp-btn--primary" to="/">View the plan</Link>

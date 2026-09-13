@@ -1,0 +1,108 @@
+.splash-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.splash-page__scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background:
+    radial-gradient(46rem 20rem at 50% -7rem, var(--color-accent-soft), transparent 70%),
+    var(--color-bg);
+}
+
+.splash-page__content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 20px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.splash-hero {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.splash-hero__title {
+  margin: 0;
+  font-size: 2.4rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.splash-hero__sub {
+  margin: 0;
+  max-width: 52ch;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+.splash-hero__actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.splash-figure {
+  margin: 0;
+  padding: 20px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.splash-figure svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.splash-figure__label {
+  font-size: 11px;
+  font-weight: 700;
+  fill: var(--color-text);
+}
+
+.splash-figure__fte {
+  font-size: 10px;
+  font-weight: 700;
+  fill: var(--color-accent-hover);
+}
+
+.splash-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.splash-card {
+  padding: 18px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.splash-card__heading {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.splash-card__body {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}

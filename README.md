@@ -14,10 +14,11 @@ This is deliberately half of a two-app split, not a full workforce planning suit
 
 1. **Demand, not commitment.** Good Plan only ever records what a project says it needs. It has
    no idea who's actually available, and doesn't pretend to — that knowledge, and the authority
-   to commit a real person against it, belongs to a complementary organizational app (working
-   name **Big Plan**) a functional/resource manager uses. Collapsing "what's needed" and "who's
-   assigned" into one app is exactly the mistake an earlier tool in this ecosystem
-   (BurnedValue) made trying to be the plan and the execution at once.
+   to commit a real person against it, belongs to a complementary organizational app,
+   **[Labor Supply & Demand](https://github.com/matthewnewell/labor-supply-demand)**, that a
+   functional/resource manager uses. Collapsing "what's needed" and "who's assigned" into one
+   app is exactly the mistake an earlier tool in this ecosystem (BurnedValue) made trying to be
+   the plan and the execution at once.
 2. **One line per phase, not one number per role.** Demand for a role rarely holds flat for a
    whole program — a design-phase Mechanical Engineer ratio is not a build-phase ratio. Good
    Plan expects more than one line for the same role over different date ranges, not a single

@@ -13,7 +13,7 @@ const ROWS = [
 const FEATURES = [
   {
     title: 'Demand, not commitment',
-    body: 'A project says what it needs — a role, how much of it, and when. Deciding who actually fills that, from real availability, is a different job for a different persona: a complementary organizational app ("Big Plan") a functional manager uses, not built here.',
+    body: 'A project says what it needs — a role, how much of it, and when. Deciding who actually fills that, from real availability, is a different job for a different persona: a complementary organizational app, Labor Supply & Demand, that a functional manager uses.',
   },
   {
     title: 'One line per phase',

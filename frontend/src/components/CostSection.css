@@ -1,0 +1,251 @@
+.cost-section__count {
+  margin-left: 6px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--color-surface-sunken);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text-faint);
+}
+
+.cost-section__hint {
+  margin: 2px 0 0;
+  font-size: 0.82rem;
+  color: var(--color-text-secondary);
+}
+
+.cost-section__subtotal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.2;
+}
+
+.cost-section__subtotal span {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--color-text-faint);
+}
+
+.cost-section__subtotal strong {
+  font-size: 1.15rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.cost-section__error {
+  margin-left: 10px;
+  font-size: 0.82rem;
+  color: var(--color-critical);
+}
+
+.cost-section__scroll {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.cost-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.cost-table th {
+  padding: 8px 8px;
+  text-align: left;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--color-text-faint);
+  background: var(--color-surface-sunken);
+  white-space: nowrap;
+}
+
+.cost-table td {
+  padding: 3px 6px;
+  border-top: 1px solid var(--color-border);
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.cost-table .num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.cost-table__desc {
+  min-width: 220px;
+}
+
+.cost-table__loaded {
+  font-weight: 700;
+}
+
+.cost-table__input {
+  width: 100%;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 4px 6px;
+  font-size: 0.82rem;
+  font-family: inherit;
+  background: transparent;
+}
+
+.cost-table__input--vendor {
+  width: 130px;
+}
+
+.cost-table__input--wbs {
+  width: 56px;
+  font-family: var(--font-mono);
+}
+
+.cost-table__input--num {
+  width: 88px;
+  text-align: right;
+}
+
+.cost-table__input:hover,
+.cost-table__date:hover {
+  border-color: var(--color-border-strong);
+}
+
+.cost-table__input:focus,
+.cost-table__date:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  background: var(--color-surface);
+}
+
+.cost-table__date {
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 3px 4px;
+  font-size: 0.8rem;
+  font-family: inherit;
+  background: transparent;
+}
+
+.cost-table__nodate {
+  margin-left: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-wait);
+}
+
+.cost-table__actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.cost-table__link {
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.cost-table__link--danger {
+  color: var(--color-text-faint);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.cost-table__link--danger:hover {
+  color: var(--color-critical);
+}
+
+.cost-table__panel td {
+  background: var(--color-surface-sunken);
+  padding: 10px 12px;
+}
+
+.milestones__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.milestones__row,
+.milestones__foot,
+.travel-calc__foot {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.milestones__foot,
+.travel-calc__foot {
+  margin-top: 10px;
+}
+
+.milestones input,
+.travel-calc input {
+  padding: 5px 8px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-family: inherit;
+  background: var(--color-surface);
+}
+
+.milestones__pct {
+  width: 64px;
+  text-align: right;
+}
+
+.milestones__amt {
+  min-width: 90px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-secondary);
+}
+
+.milestones__sum {
+  font-size: 0.82rem;
+  color: var(--color-text-secondary);
+}
+
+.milestones__sum--bad {
+  color: var(--color-critical);
+  font-weight: 700;
+}
+
+.travel-calc__fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+}
+
+.travel-calc__field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.travel-calc__field span {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--color-text-faint);
+}
+
+.travel-calc__field input {
+  width: 100px;
+  text-align: right;
+}
+
+.travel-calc__foot em {
+  font-style: normal;
+  color: var(--color-text-faint);
+  font-size: 0.78rem;
+}

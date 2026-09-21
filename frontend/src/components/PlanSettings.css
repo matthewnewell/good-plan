@@ -1,0 +1,99 @@
+/* The contract & pricing form, in the drawer's ℹ️ tab (a narrow column, so fields stack). */
+.plan-settings--drawer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.plan-settings__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.plan-settings__help {
+  margin: -6px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+
+.plan-settings--drawer .plan-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.plan-settings--drawer .plan-field > span {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--color-text-faint);
+}
+
+.plan-settings--drawer .plan-field__select {
+  padding: 8px 10px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-family: inherit;
+}
+
+.plan-settings--drawer .plan-field__money,
+.plan-settings--drawer .plan-field__pct {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  padding: 0 10px;
+}
+
+.plan-settings--drawer .plan-field__money em,
+.plan-settings--drawer .plan-field__pct em {
+  font-style: normal;
+  color: var(--color-text-faint);
+}
+
+.plan-settings--drawer .plan-field__money input,
+.plan-settings--drawer .plan-field__pct input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  padding: 8px 6px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: inherit;
+  text-align: right;
+  outline: none;
+}
+
+.plan-settings--drawer .plan-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.plan-settings--drawer .plan-check span {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.plan-settings--drawer .plan-check small {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--color-text-faint);
+}
+
+.plan-settings__error {
+  font-size: 0.82rem;
+  color: var(--color-critical);
+}

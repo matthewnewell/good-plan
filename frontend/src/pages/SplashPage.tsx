@@ -12,16 +12,16 @@ const ROWS = [
 
 const FEATURES = [
   {
-    title: 'Demand, not commitment',
-    body: 'A project says what it needs — a role, how much of it, and when. Deciding who actually fills that, from real availability, is a different job for a different persona: a complementary organizational app, Labor Supply & Demand, that a functional manager uses.',
+    title: 'Priced from real history',
+    body: "Labor rates come from Reckon's historical averages by labor category, not a single blended guess — so a shift from junior to senior hours moves the budget the way it really would. Override any line when you know better.",
   },
   {
-    title: 'One line per phase',
-    body: "Demand for a role rarely holds flat for a whole program. Two lines — one lighter, one heavier — say more than a single number averaged across a project that doesn't move at one pace.",
+    title: 'Weekly, like a schedule',
+    body: 'Allocate hours per category per week, fill a range with a steady FTE, and watch labor over time — hours or dollars, weekly or cumulative, against the contract value.',
   },
   {
-    title: 'No fake precision',
-    body: "Summing FTE across lines with different date ranges would imply a peak headcount this app doesn't actually know. So it doesn't — you see the real lines, not a computed total dressed up as one.",
+    title: 'Budget against the contract',
+    body: 'Pick the contract type (cost plus fixed fee, award fee, firm fixed price, or internal) and see the fee and the undistributed budget — what the contract funds that is not yet planned into work — as you plan. Labor Supply & Demand reads the same plan to see what staffing it asks for.',
   },
 ]
 

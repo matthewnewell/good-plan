@@ -2,8 +2,7 @@ import { NavLink } from 'react-router-dom'
 import './Nav.css'
 
 /** Persistent top navbar — same pattern as the sibling apps: brand links to the splash page,
- * one top-level link for the rest. Good Plan is deliberately a single-page app for now — a
- * project's labor demand, nothing else — so there's nothing to split into more nav items yet. */
+ * one top-level link for the rest (the list of plans; a plan opens from there). */
 export default function Nav() {
   return (
     <nav className="gp-nav">
@@ -16,7 +15,7 @@ export default function Nav() {
           end
           className={({ isActive }) => `gp-nav__link ${isActive ? 'gp-nav__link--active' : ''}`}
         >
-          Plan
+          Plans
         </NavLink>
       </div>
     </nav>

@@ -3,6 +3,7 @@ import { Link, useParams, useSearchParams } from 'react-router-dom'
 import {
   useAddLine,
   useDeleteLine,
+  useFunctions,
   usePlan,
   useRates,
   useSetWeeks,
@@ -329,6 +330,7 @@ function Segmented<T extends string>({
 // ── the weekly grid ───────────────────────────────────────────────────────────────────────────
 function Grid({ plan }: { plan: Plan }) {
   const { data: ratesData } = useRates()
+  const { data: functionsData } = useFunctions()
   const addLine = useAddLine(plan.id)
   const updateLine = useUpdateLine(plan.id)
   const deleteLine = useDeleteLine(plan.id)
@@ -336,6 +338,12 @@ function Grid({ plan }: { plan: Plan }) {
   const spread = useSpread(plan.id)
   const updatePlan = useUpdatePlan(plan.id)
   const [unit, setUnit] = useState<Unit>('hours')
+  // A role is a Function, then a category inside it — a non-choice for most functions (they
+  // hold exactly one category), a real pick only for Manufacturing. Falls back to Reckon's flat
+  // rate list if Org Charts isn't reachable, so adding a line never dead-ends.
+  const functions = functionsData?.functions ?? []
+  const [newFunction, setNewFunction] = useState('')
+  const categoriesFor = (fn: string) => functions.find((f) => f.name === fn)?.categories ?? []
   const [newCategory, setNewCategory] = useState('')
   const [fillFor, setFillFor] = useState<string | null>(null)
   const thisMonday = mondayIso(new Date())
@@ -460,22 +468,45 @@ function Grid({ plan }: { plan: Plan }) {
           e.preventDefault()
           const c = newCategory.trim()
           if (!c) return
-          addLine.mutate({ category: c }, { onSuccess: () => setNewCategory('') })
+          addLine.mutate({ category: c }, { onSuccess: () => { setNewFunction(''); setNewCategory('') } })
         }}
       >
-        <input
-          list="gp-categories"
-          value={newCategory}
-          onChange={(e) => setNewCategory(e.target.value)}
-          placeholder="Add a person by labor category (from Reckon's rate table)…"
-        />
-        <datalist id="gp-categories">
-          {(ratesData?.rates ?? []).map((r) => (
-            <option key={r.name} value={r.name}>
-              {`$${r.avg_rate}/h direct · $${r.loaded_rate}/h loaded`}
+        <span className="plan-add__label">Add a person from</span>
+        <select
+          value={newFunction}
+          onChange={(e) => {
+            const fn = e.target.value
+            setNewFunction(fn)
+            const cats = categoriesFor(fn)
+            setNewCategory(cats.length === 1 ? cats[0] : '')
+          }}
+        >
+          <option value="" disabled>
+            Function…
+          </option>
+          {functions.map((f) => (
+            <option key={f.name} value={f.name}>
+              {f.name}
+              {f.manager_name ? ` — ${f.manager_name}` : ''}
             </option>
           ))}
-        </datalist>
+        </select>
+        {categoriesFor(newFunction).length > 1 && (
+          <select value={newCategory} onChange={(e) => setNewCategory(e.target.value)}>
+            <option value="" disabled>
+              Category…
+            </option>
+            {categoriesFor(newFunction).map((cat) => {
+              const rate = ratesData?.rates.find((r) => r.name === cat)
+              return (
+                <option key={cat} value={cat}>
+                  {cat}
+                  {rate ? ` — $${rate.avg_rate}/h direct · $${rate.loaded_rate}/h loaded` : ''}
+                </option>
+              )
+            })}
+          </select>
+        )}
         <button className="gp-btn gp-btn--primary" type="submit" disabled={!newCategory.trim() || addLine.isPending}>
           + Add a person
         </button>

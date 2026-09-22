@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api } from './client'
-import type { CostKind, Plan, ProjectsResponse, RatesResponse } from './types'
+import type { CostKind, FunctionsResponse, Plan, ProjectsResponse, RatesResponse } from './types'
 
 export function useProjects() {
   return useQuery({
@@ -21,6 +21,14 @@ export function useRates() {
   return useQuery({
     queryKey: ['rates'],
     queryFn: () => api.get<RatesResponse>('/rates'),
+    staleTime: 60_000,
+  })
+}
+
+export function useFunctions() {
+  return useQuery({
+    queryKey: ['functions'],
+    queryFn: () => api.get<FunctionsResponse>('/functions'),
     staleTime: 60_000,
   })
 }

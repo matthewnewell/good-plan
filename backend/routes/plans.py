@@ -3,6 +3,7 @@ from datetime import date, timedelta
 from flask import Blueprint, jsonify, request
 
 import depot_client
+import org_charts_client
 import reckon_client
 from db import db
 import json
@@ -120,6 +121,14 @@ def list_rates():
     rates, reachable = reckon_client.fetch_rates()
     rows = [{"name": n, **r, "loaded_rate": round(r["avg_rate"] * r["burden_factor"], 2)} for n, r in sorted(rates.items())]
     return jsonify({"rates": rows, "reachable": reachable})
+
+
+@bp.get("/functions")
+def list_functions():
+    """Org Charts' functional taxonomy, passed through — powers the "pick a role" form as a
+    Function, then a category inside it, instead of free-typing a category name."""
+    functions, reachable = org_charts_client.fetch_functions()
+    return jsonify({"functions": functions, "reachable": reachable})
 
 
 # ── plans ────────────────────────────────────────────────────────────────────────────────────

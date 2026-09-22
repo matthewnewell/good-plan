@@ -26,7 +26,7 @@ COASTAL = ("d4e7a1b9-5c28-4360-9f1a-e83b0c6d72f5", "Prospect: Coastal Patrol Rec
 #             [(category, wbs, [(fte, first week, last week)], note)])   weeks are 0-based offsets
 _PLANS = {
     BRACKET: (1_200_000, 8.0, 4, 44, [
-        ("Program Manager", "1.1", [(0.25, 0, 40)], None),
+        ("Project Engineer", "1.1", [(0.25, 0, 40)], None),
         ("Systems Engineer", "1.2", [(1.0, 0, 9)], "Requirements and architecture through PDR."),
         ("Mechanical Engineer", "1.3", [(1.5, 1, 14), (0.5, 15, 30)], "Design through CDR, then sustaining engineering."),
         ("Manufacturing Engineer", "1.4", [(1.0, 6, 30)], None),
@@ -35,14 +35,14 @@ _PLANS = {
         ("Mission Assurance Engineer", "3.1", [(0.5, 8, 40)], "First-article inspection and KC-1 sampling."),
     ]),
     NACELLE: (850_000, 8.0, 4, 40, [
-        ("Program Manager", "1.1", [(0.25, 0, 30)], None),
+        ("Project Engineer", "1.1", [(0.25, 0, 30)], None),
         ("Mechanical Engineer", "1.3", [(1.0, 0, 12)], None),
         ("Composite Technician", "2.1", [(2.5, 8, 30)], "Lay-up capacity is the constraint this quarter."),
         ("Quality Inspector", "2.2", [(1.0, 12, 34)], "NDT-heavy retrofit — higher inspection ratio than a new build."),
         ("Mission Assurance Engineer", "3.1", [(0.5, 6, 34)], None),
     ]),
     RADAR: (3_900_000, 8.0, 6, 48, [
-        ("Program Manager", "1.1", [(0.5, 0, 46)], None),
+        ("Project Engineer", "1.1", [(0.5, 0, 46)], None),
         ("Systems Engineer", "1.2", [(1.0, 0, 8)], None),
         ("Mechanical Engineer", "1.3", [(2.0, 0, 14)], None),
         ("Manufacturing Engineer", "1.4", [(1.5, 4, 42)], None),
@@ -53,7 +53,7 @@ _PLANS = {
         ("Test Technician", "3.2", [(1.0, 28, 46)], None),
     ]),
     COASTAL: (6_400_000, 8.0, 0, 60, [
-        ("Program Manager", "1.1", [(1.0, 0, 58)], None),
+        ("Project Engineer", "1.1", [(1.0, 0, 58)], None),
         ("Systems Engineer", "1.2", [(3.0, 4, 24)], None),
         ("Electrical Engineer", "1.3", [(3.0, 8, 30)], None),
         ("Software Engineer", "1.4", [(4.0, 10, 40)], "Sensor fusion and operator interface."),

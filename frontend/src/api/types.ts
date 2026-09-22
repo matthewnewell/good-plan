@@ -35,6 +35,17 @@ export interface RatesResponse {
   reachable: boolean
 }
 
+export interface FunctionRow {
+  name: string
+  categories: string[]
+  manager_name: string | null
+}
+
+export interface FunctionsResponse {
+  functions: FunctionRow[]
+  reachable: boolean
+}
+
 export interface PlanLine {
   id: string
   category: string

@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { useAddCost, useDeleteCost, useSetPhases, useUpdateCost } from '../api/hooks'
+import { useAddCost, useDeleteCost, useSetPhases, useUpdateCost, useWbs } from '../api/hooks'
+import WbsPicker from './WbsPicker'
 import type { CostKind, CostLine, Plan } from '../api/types'
 import { money } from '../lib/format'
 import './CostSection.css'
@@ -97,7 +98,8 @@ function CostRows({
 }) {
   const update = useUpdateCost(plan.id)
   const remove = useDeleteCost(plan.id)
-  const text = (field: 'description' | 'vendor' | 'wbs') => (
+  const { data: wbs } = useWbs(plan.id)
+  const text = (field: 'description' | 'vendor') => (
     <input
       key={`${field}:${line[field] ?? ''}`}
       className={`cost-table__input cost-table__input--${field}`}
@@ -128,7 +130,10 @@ function CostRows({
       <tr>
         <td className="cost-table__desc">{text('description')}</td>
         <td>{text('vendor')}</td>
-        <td>{text('wbs')}</td>
+        <td>
+          <WbsPicker wbs={wbs} value={line.wbs} onChange={(code) => code !== line.wbs && update.mutate({ id: line.id, wbs: code ?? '' })} />
+          {update.error && <div className="cost-section__error">{update.error.message}</div>}
+        </td>
         <td className="num">{number('qty')}</td>
         <td className="num">{number('unit_cost')}</td>
         <td className="num">{money(line.total)}</td>

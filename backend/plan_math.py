@@ -175,6 +175,39 @@ def plan_view(plan: Plan, rates: dict[str, dict], burden: dict[str, float] | Non
     }
 
 
+def time_phased_budget(plan: Plan, rates: dict[str, dict], burden: dict[str, float] | None = None) -> dict:
+    """The plan's budget spread over time, per WBS element: what Reckon reads as planned value.
+    {code: {week: amount}}, loaded exactly as plan_view prices it (labor at each line's effective
+    rate, costs at their kind's burden, landing on their need date or milestones). Anything with no
+    WBS code lands under None; costs with no date are left out of the weeks but kept in `undated`."""
+    burden = burden or DEFAULT_BURDEN
+    by_wbs: dict[str | None, dict[str, float]] = {}
+    undated: dict[str | None, float] = {}
+
+    def add(code, week: str, amount: float):
+        row = by_wbs.setdefault(code, {})
+        row[week] = row.get(week, 0.0) + amount
+
+    for line in plan.lines:
+        rate = line_rates(plan, line, rates)["effective_rate"]
+        if rate is None:
+            continue
+        for w in line.weeks:
+            if w.hours:
+                add(line.wbs, w.week_start.isoformat(), w.hours * rate)
+    for c in plan.cost_lines:
+        factor = cost_factor(plan, c.kind, burden)
+        events = cost_events(c)
+        if not events:
+            undated[c.wbs] = undated.get(c.wbs, 0.0) + cost_line_total(c) * factor
+        for when, amount in events:
+            add(c.wbs, monday_of(when).isoformat(), amount * factor)
+    return {
+        "by_wbs": {code: {w: round(v, 2) for w, v in sorted(row.items())} for code, row in by_wbs.items()},
+        "undated": {code: round(v, 2) for code, v in undated.items()},
+    }
+
+
 def demand_runs(plan: Plan) -> list[dict]:
     """The legacy `/api/demand` shape Labor Supply & Demand reads: one row per run of consecutive
     weeks at the same FTE, per labor line — so a plan that steps a role up and down over time

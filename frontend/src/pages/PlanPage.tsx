@@ -10,9 +10,12 @@ import {
   useSpread,
   useUpdateLine,
   useUpdatePlan,
+  useWbs,
 } from '../api/hooks'
-import type { Plan, PlanLine } from '../api/types'
+import type { Plan, PlanLine, Wbs } from '../api/types'
 import CostSection from '../components/CostSection'
+import WbsPanel from '../components/WbsPanel'
+import WbsPicker from '../components/WbsPicker'
 import PlanChart, { type ChartSeries } from '../components/PlanChart'
 import { FEE_LABEL } from '../components/PlanSettings'
 import { money, moneyShort, num, shortDate } from '../lib/format'
@@ -39,17 +42,19 @@ export default function PlanPage() {
   return <PlanView plan={plan} />
 }
 
-type TabId = 'labor' | 'materials' | 'odc'
+type TabId = 'labor' | 'materials' | 'odc' | 'wbs'
 const TABS: { id: TabId; label: string; amount: (t: Plan['totals']) => number }[] = [
   { id: 'labor', label: 'Labor', amount: (t) => t.labor_cost },
   { id: 'materials', label: 'Materials', amount: (t) => t.material_cost },
   { id: 'odc', label: 'Other direct costs', amount: (t) => t.odc_cost },
+  // Everything above, rolled up by WBS element.
+  { id: 'wbs', label: 'By WBS', amount: (t) => t.cost },
 ]
 
 function PlanView({ plan }: { plan: Plan }) {
   const [params, setParams] = useSearchParams()
   const tabParam = params.get('tab')
-  const tab: TabId = tabParam === 'materials' || tabParam === 'odc' ? tabParam : 'labor'
+  const tab: TabId = tabParam === 'materials' || tabParam === 'odc' || tabParam === 'wbs' ? tabParam : 'labor'
   const setTab = (id: TabId) =>
     setParams(
       (prev) => {
@@ -254,6 +259,7 @@ function PlanView({ plan }: { plan: Plan }) {
           <Grid plan={plan} />
         </>
       )}
+      {tab === 'wbs' && <WbsPanel plan={plan} />}
       {tab === 'materials' && (
         <CostSection
           plan={plan}
@@ -337,6 +343,7 @@ function Grid({ plan }: { plan: Plan }) {
   const setWeeks = useSetWeeks(plan.id)
   const spread = useSpread(plan.id)
   const updatePlan = useUpdatePlan(plan.id)
+  const { data: wbs } = useWbs(plan.id)
   const [unit, setUnit] = useState<Unit>('hours')
   // A role is a Function, then a category inside it — a non-choice for most functions (they
   // hold exactly one category), a real pick only for Manufacturing. Falls back to Reckon's flat
@@ -417,6 +424,7 @@ function Grid({ plan }: { plan: Plan }) {
                 key={line.id}
                 line={line}
                 plan={plan}
+                wbs={wbs}
                 thisMonday={thisMonday}
                 display={display}
                 overClass={overClass}
@@ -518,6 +526,7 @@ function Grid({ plan }: { plan: Plan }) {
 function LineRows({
   line,
   plan,
+  wbs,
   thisMonday,
   display,
   overClass,
@@ -532,6 +541,7 @@ function LineRows({
 }: {
   line: PlanLine
   plan: Plan
+  wbs: Wbs | undefined
   thisMonday: string
   display: (h: number) => string
   overClass: (h: number) => string
@@ -574,13 +584,7 @@ function LineRows({
           </div>
         </td>
         <td>
-          <input
-            key={line.wbs ?? ''}
-            className="plan-grid__wbs"
-            defaultValue={line.wbs ?? ''}
-            placeholder="—"
-            onBlur={(e) => e.target.value.trim() !== (line.wbs ?? '') && onUpdate({ wbs: e.target.value.trim() || null })}
-          />
+          <WbsPicker wbs={wbs} value={line.wbs} onChange={(code) => code !== line.wbs && onUpdate({ wbs: code })} />
         </td>
         <td>
           <div className="plan-grid__rate" title={line.effective_rate != null ? `Direct $${line.direct_rate}/h × ${line.burden_factor} burden = $${line.effective_rate}/h` : 'No rate for this category'}>

@@ -1,23 +1,20 @@
+import { AppHeader, tabClass } from '@conways/drawer'
 import { NavLink } from 'react-router-dom'
-import './Nav.css'
 
-/** Persistent top navbar — same pattern as the sibling apps: brand links to the splash page,
- * one top-level link for the rest (the list of plans; a plan opens from there). */
+/** The ecosystem's shared header (@conways/drawer's AppHeader): back to where you came from in
+ * Conway's Depot, the app and its tabs, and the "viewing as" user menu. */
 export default function Nav() {
   return (
-    <nav className="gp-nav">
-      <NavLink to="/about" className="gp-nav__brand">
-        Good Plan
-      </NavLink>
-      <div className="gp-nav__links">
-        <NavLink
-          to="/"
-          end
-          className={({ isActive }) => `gp-nav__link ${isActive ? 'gp-nav__link--active' : ''}`}
-        >
-          Plans
+    <AppHeader
+      brand={
+        <NavLink to="/about" className="ch-brand">
+          Good Plan
         </NavLink>
-      </div>
-    </nav>
+      }
+    >
+      <NavLink to="/" end className={({ isActive }) => tabClass(isActive)}>
+        Plans
+      </NavLink>
+    </AppHeader>
   )
 }

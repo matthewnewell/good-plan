@@ -73,10 +73,54 @@
   fill: var(--color-text);
 }
 
-.splash-figure__fte {
+.splash-figure__detail {
+  font-size: 9.5px;
+  fill: var(--color-text-faint);
+}
+
+.splash-figure__amt {
+  font-size: 11px;
+  font-weight: 700;
+  fill: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.splash-figure__amt--ub {
+  fill: var(--color-wait);
+}
+
+.splash-figure__ub {
   font-size: 10px;
   font-weight: 700;
-  fill: var(--color-accent-hover);
+  fill: var(--color-wait);
+}
+
+.splash-figure__rule {
+  stroke: var(--color-border);
+}
+
+/* Cost elements: labor in the app accent, the rest in quieter tones; undistributed budget is a
+   dashed amber outline, money not yet planned into anything. */
+.splash-seg--labor {
+  fill: var(--color-accent);
+}
+
+.splash-seg--material {
+  fill: #60a5fa;
+}
+
+.splash-seg--subcontract {
+  fill: #93c5fd;
+}
+
+.splash-seg--odc {
+  fill: #c7d2fe;
+}
+
+.splash-seg--ub {
+  fill: var(--color-wait-soft);
+  stroke: var(--color-wait);
+  stroke-dasharray: 3 2;
 }
 
 .splash-grid {

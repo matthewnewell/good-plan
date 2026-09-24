@@ -1,17 +1,8 @@
-const KEY = 'good-plan:person-id'
+import { currentPersonId } from '@conways/drawer'
 
-/** The person who launched this app from Conway's Depot (`?person_id=`), remembered for the tab's
- * session since the param vanishes on the first in-app navigation. Only used to author Journal
- * notes; Good Plan has no login and no persona switcher of its own. */
+/** Who's using the app: the ecosystem's "viewing as" persona (the header's user menu, a Depot link's
+ * `?person_id=`). The app reloads when it changes (PersonaProvider reloadOnSwitch in main.tsx), so
+ * reading it once per page is enough. */
 export function readPersonId(): string | undefined {
-  try {
-    const fromUrl = new URLSearchParams(window.location.search).get('person_id')
-    if (fromUrl) {
-      window.sessionStorage.setItem(KEY, fromUrl)
-      return fromUrl
-    }
-    return window.sessionStorage.getItem(KEY) ?? undefined
-  } catch {
-    return undefined
-  }
+  return currentPersonId() ?? undefined
 }

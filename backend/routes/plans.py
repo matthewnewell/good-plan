@@ -9,7 +9,8 @@ from db import db
 import json
 
 from models import COST_KINDS, CONTRACT_TYPES, CostLine, CostPhase, LaborLine, LaborWeek, Plan
-from plan_math import monday_of, plan_view, window_weeks
+from plan_math import monday_of, plan_view, time_phased_budget, window_weeks
+from wbs import check_code
 
 bp = Blueprint("plans", __name__, url_prefix="/api")
 
@@ -113,6 +114,33 @@ def list_positions():
     return jsonify(out)
 
 
+@bp.get("/budget")
+def budget():
+    """A project's time-phased budget by WBS element, for Reckon's earned value: `?project_id=`
+    (a Depot project id). BAC is the plan's total planned cost; `by_wbs` is {code: {week: $}} with
+    uncoded lines under "" (JSON can't key on null). 404 when the project has no plan."""
+    project_id = request.args.get("project_id")
+    plan = Plan.query.filter_by(depot_project_id=project_id).first() if project_id else None
+    if plan is None:
+        return jsonify({"error": "no plan for that project"}), 404
+    rates, burden, reachable = _pricing()
+    view = plan_view(plan, rates, burden)
+    tp = time_phased_budget(plan, rates, burden)
+    return jsonify({
+        "project_id": plan.depot_project_id,
+        "plan_id": plan.id,
+        "project_name": plan.project_name,
+        "contract_value": plan.contract_value,
+        "contract_type": plan.contract_type,
+        "start_week": plan.start_week.isoformat(),
+        "week_count": plan.week_count,
+        "bac": view["totals"]["cost"],
+        "by_wbs": {(code or ""): row for code, row in tp["by_wbs"].items()},
+        "undated": {(code or ""): v for code, v in tp["undated"].items()},
+        "rates_reachable": reachable,
+    })
+
+
 @bp.get("/rates")
 def list_rates():
     """Reckon's labor-rate table, passed through (server-to-server) so the browser only ever talks
@@ -211,8 +239,11 @@ def add_line(plan_id):
     category = (body.get("category") or "").strip()
     if not category:
         return jsonify({"error": "category is required"}), 400
+    wbs = (body.get("wbs") or "").strip() or None
+    if (problem := check_code(plan, wbs)) is not None:
+        return jsonify({"error": problem}), 400
     position = max((l.position for l in plan.lines), default=-1) + 1
-    line = LaborLine(plan_id=plan.id, category=category, wbs=(body.get("wbs") or "").strip() or None, position=position)
+    line = LaborLine(plan_id=plan.id, category=category, wbs=wbs, position=position)
     db.session.add(line)
     db.session.commit()
     return jsonify(_view(plan)), 201
@@ -229,7 +260,10 @@ def update_line(line_id):
                 return jsonify({"error": "category cannot be empty"}), 400
             line.category = category
         if "wbs" in body:
-            line.wbs = (body["wbs"] or "").strip() or None
+            code = (body["wbs"] or "").strip() or None
+            if (problem := check_code(line.plan, code)) is not None:
+                return jsonify({"error": problem}), 400
+            line.wbs = code
         if "note" in body:
             line.note = (body["note"] or "").strip() or None
         if "rate_override" in body:
@@ -343,7 +377,10 @@ def update_cost(cost_id):
         if "vendor" in body:
             line.vendor = (body["vendor"] or "").strip() or None
         if "wbs" in body:
-            line.wbs = (body["wbs"] or "").strip() or None
+            code = (body["wbs"] or "").strip() or None
+            if (problem := check_code(line.plan, code)) is not None:
+                return jsonify({"error": problem}), 400
+            line.wbs = code
         if "note" in body:
             line.note = (body["note"] or "").strip() or None
         if "qty" in body:

@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api } from './client'
-import type { CostKind, FunctionsResponse, Plan, ProjectsResponse, RatesResponse } from './types'
+import type { CostKind, FunctionsResponse, Plan, ProjectsResponse, RatesResponse, Wbs } from './types'
 
 export function useProjects() {
   return useQuery({
@@ -115,6 +115,41 @@ export function useUpdateCost(planId: string | undefined) {
 
 export function useDeleteCost(planId: string | undefined) {
   return usePlanMutation(planId, (costId: string) => api.del<Plan>(`/costs/${costId}`))
+}
+
+// ── WBS ───────────────────────────────────────────────────────────────────────────────────────
+
+export function useWbs(planId: string | undefined) {
+  return useQuery({
+    queryKey: ['wbs', planId],
+    queryFn: () => api.get<Wbs>(`/plans/${planId}/wbs`),
+    enabled: !!planId,
+    staleTime: 30_000,
+  })
+}
+
+function useWbsMutation<V>(planId: string | undefined, fn: (vars: V) => Promise<Wbs>) {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: fn,
+    onSuccess: (wbs) => qc.setQueryData(['wbs', planId], wbs),
+  })
+}
+
+export function useAddWbsElement(planId: string | undefined) {
+  return useWbsMutation(planId, (data: { title: string; parent_code?: string }) => api.post<Wbs>(`/plans/${planId}/wbs`, data))
+}
+
+export function useRenameWbsElement(planId: string | undefined) {
+  return useWbsMutation(planId, ({ id, title }: { id: string; title: string }) => api.put<Wbs>(`/plans/${planId}/wbs/${id}`, { title }))
+}
+
+export function useDeleteWbsElement(planId: string | undefined) {
+  return useWbsMutation(planId, (id: string) => api.del<Wbs>(`/plans/${planId}/wbs/${id}`))
+}
+
+export function usePromoteWbs(planId: string | undefined) {
+  return useWbsMutation(planId, (author: string | undefined) => api.post<Wbs>(`/plans/${planId}/wbs/promote`, { author }))
 }
 
 export function useSetPhases(planId: string | undefined) {

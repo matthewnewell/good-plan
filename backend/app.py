@@ -7,7 +7,8 @@ from routes.ai import bp as ai_bp
 from routes.demand import bp as demand_bp
 from routes.plans import bp as plans_bp
 from routes.summary import bp as summary_bp
-from seed import seed_costs_if_missing, seed_if_empty
+from routes.wbs import bp as wbs_bp
+from seed import seed_costs_if_missing, seed_draft_wbs_if_missing, seed_if_empty, seed_pursuit_plans_if_missing
 
 FRONTEND_DIST = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "frontend", "dist")
 
@@ -21,10 +22,13 @@ def create_app():
     app.register_blueprint(ai_bp)
     app.register_blueprint(plans_bp)
     app.register_blueprint(summary_bp)
+    app.register_blueprint(wbs_bp)
 
     with app.app_context():
         seed_if_empty()
         seed_costs_if_missing()
+        seed_pursuit_plans_if_missing()
+        seed_draft_wbs_if_missing()
 
     @app.get("/api/health")
     def health():

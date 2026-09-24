@@ -36,6 +36,13 @@ product), and WHEN it lands: a single need date, or milestones (CostPhase: date 
 to 100) that override it — a subcontract paid 30/30/40 on three dates. Free-typed for now (a material
 is an estimate at planning time; linking to MARTI's material numbers can come later). Each kind has
 its own burden multiplier, held in Reckon: materials carry handling + G&A, the rest G&A only.
+
+WBS: every line (labor, material, ODC) sits on one work package, a LEAF of the project's WBS, by
+its code (`wbs`, e.g. "1.3"). Scope Manager owns the WBS (scope and progress); Good Plan budgets
+against it and never edits it. A pursuit has no WBS there yet, so Good Plan holds a DRAFT
+(`WbsElement`) to estimate against. The estimate is what forward-looking staffing reads. At award
+the draft is sent to Scope Manager, which owns it from then on. Pursuit capture and proposal effort
+itself charges to the pursuit's B&P (bid and proposal) charge number from S4, not to this WBS.
 """
 
 from datetime import datetime, timezone
@@ -150,3 +157,17 @@ class CostPhase(db.Model):
     percent = db.Column(db.Float, nullable=False)
 
     line = db.relationship("CostLine", back_populates="phases")
+
+
+class WbsElement(db.Model):
+    """One element of a pursuit's draft WBS. Codes carry the tree ("1.2" sits under "1"); a leaf is
+    an element no other code extends. Only used while Scope Manager has no WBS for the project."""
+
+    __tablename__ = "wbs_element"
+    __table_args__ = (db.UniqueConstraint("plan_id", "code", name="uq_wbs_element_code"),)
+
+    id = db.Column(db.String(36), primary_key=True, default=_uuid)
+    plan_id = db.Column(db.String(36), db.ForeignKey("plan.id"), nullable=False, index=True)
+    code = db.Column(db.String(30), nullable=False)
+    title = db.Column(db.String(200), nullable=False)
+    created_at = db.Column(db.DateTime, default=_now, nullable=False)

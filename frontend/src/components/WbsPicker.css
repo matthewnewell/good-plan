@@ -1,0 +1,38 @@
+.wbs-picker {
+  width: 108px;
+  font: inherit;
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  padding: 2px 2px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--color-text);
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.wbs-picker:hover:not(:disabled) {
+  border-color: var(--color-border-strong);
+}
+
+.wbs-picker:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  background: var(--color-surface);
+}
+
+.wbs-picker--empty {
+  color: var(--color-text-faint);
+}
+
+.wbs-picker--stray {
+  color: var(--color-critical);
+  border-color: var(--color-critical-soft);
+  background: var(--color-critical-soft);
+}
+
+.wbs-picker:disabled {
+  cursor: not-allowed;
+  color: var(--color-text-faint);
+}

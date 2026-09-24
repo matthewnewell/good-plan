@@ -1,0 +1,223 @@
+.wbs-panel .plan-card__head {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.wbs-panel__source {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 7px;
+  border-radius: 999px;
+  vertical-align: 2px;
+  margin-left: 6px;
+}
+
+.wbs-panel__source--scope_manager {
+  background: var(--color-success-soft);
+  color: #15803d;
+}
+
+.wbs-panel__source--draft {
+  background: var(--color-wait-soft);
+  color: #b45309;
+}
+
+.wbs-panel__source--none {
+  background: var(--color-surface-sunken);
+  color: var(--color-text-faint);
+}
+
+.wbs-panel__intro p {
+  margin: 4px 0 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+  max-width: 900px;
+}
+
+.wbs-panel__intro code,
+.wbs-table__meta code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: var(--color-surface-sunken);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.wbs-panel__warn {
+  color: #b45309 !important;
+}
+
+.wbs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.wbs-table th {
+  text-align: left;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--color-text-faint);
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.wbs-table td {
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.wbs-table .num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.wbs-table__code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  width: 52px;
+  color: var(--color-text-secondary);
+}
+
+.wbs-table__group td {
+  background: var(--color-surface-sunken);
+  font-weight: 600;
+}
+
+.wbs-table__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wbs-table__title input {
+  font: inherit;
+  padding: 2px 6px;
+  border: 1px solid var(--color-accent);
+  border-radius: 4px;
+  min-width: 240px;
+}
+
+.wbs-table__wp {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: var(--color-accent-soft);
+  color: var(--color-accent-hover);
+}
+
+.wbs-table__total {
+  font-weight: 600;
+}
+
+.wbs-table__nobudget {
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--color-text-faint);
+}
+
+.wbs-table__share {
+  display: inline-block;
+  width: 60px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--color-surface-sunken);
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.wbs-table__share span {
+  display: block;
+  height: 100%;
+  background: var(--color-accent);
+}
+
+.wbs-table__meta {
+  white-space: nowrap;
+}
+
+.wbs-table__pct {
+  margin-left: 8px;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.wbs-table__actions {
+  white-space: nowrap;
+  text-align: right;
+}
+
+.wbs-table__actions button {
+  font: inherit;
+  font-size: 12px;
+  background: none;
+  border: none;
+  color: var(--color-accent);
+  cursor: pointer;
+  padding: 2px 5px;
+}
+
+.wbs-table__actions button:disabled {
+  color: var(--color-text-faint);
+  cursor: not-allowed;
+}
+
+.wbs-table__actions .wbs-table__del {
+  color: var(--color-critical);
+  font-size: 15px;
+}
+
+.wbs-table__off td {
+  background: var(--color-critical-soft);
+}
+
+.wbs-table__offlist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+}
+
+.wbs-table__hint {
+  font-size: 12px;
+  color: var(--color-critical);
+}
+
+.wbs-table__empty {
+  color: var(--color-text-secondary);
+  padding: 14px 8px;
+}
+
+.wbs-panel__add {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.wbs-panel__add input {
+  flex: 1;
+  max-width: 420px;
+  font: inherit;
+  font-size: 13px;
+  padding: 6px 10px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+}
+
+@media (max-width: 800px) {
+  .wbs-table {
+    display: block;
+    overflow-x: auto;
+  }
+}

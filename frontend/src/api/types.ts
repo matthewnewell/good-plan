@@ -144,3 +144,29 @@ export interface Plan {
   totals: PlanTotals
   rates_reachable: boolean
 }
+
+// ── WBS: the one a plan budgets against (routes/wbs.py) ───────────────────────────────────────
+export interface WbsElement {
+  id: string
+  code: string
+  title: string
+  parent_code: string | null
+  /** A work package: the only kind of element a line may sit on. */
+  leaf: boolean
+  charge_number: string | null
+  percent_complete: number | null
+  status: string | null
+}
+
+export interface Wbs {
+  /** scope_manager = the project's WBS; draft = this plan's own (a pursuit's); none = not set up. */
+  source: 'scope_manager' | 'draft' | 'none'
+  elements: WbsElement[]
+  reachable: boolean
+  phase: string | null
+  editable: boolean
+  can_promote: boolean
+  /** A pursuit's Bid & Proposal charge number from S4 (via the Depot), for capture and proposal effort. */
+  bp_charge_number: string | null
+  scope_manager_url: string
+}
